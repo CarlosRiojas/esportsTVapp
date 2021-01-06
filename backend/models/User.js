@@ -3,7 +3,7 @@ const PLM = require('passport-local-mongoose');
 
 const userSchema = new Schema(
   {
-
+    
     email: {
       type: String,
       unique: true,
@@ -13,9 +13,11 @@ const userSchema = new Schema(
       type:String,
       default:"newUser"
     },
-    streams:{
-      type:Schema.Types.ObjectId
-    }
+  streams:[{
+      type:Schema.Types.ObjectId,
+      ref:"Streams"
+    }],
+    password:String
   },
 
   {
@@ -24,6 +26,6 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.plugin(PLM, { usernameField: 'email' });
+userSchema.plugin(PLM, { usernameField: 'email' ,passwordField:"password"});
 
 module.exports = model('User', userSchema);
