@@ -24,7 +24,11 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.FRONTENDPOINT]
+    origin: [
+      process.env.FRONTENDPOINT,
+      'http://localhost:3001',
+      'http://localhost:3000',
+      '*'  ]
   })
 );
 
@@ -40,7 +44,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/build')));//le anadi "build"
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -52,6 +56,6 @@ app.use('/', index);
 app.use('/', auth);
 
 // Uncomment this line for production
-// app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
+app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
 
 module.exports = app;

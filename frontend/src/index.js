@@ -4,6 +4,11 @@ import './index.css';
 import Router from './Router';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<Router />, document.getElementById('root'));
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Router />
+  </React.StrictMode>, document.getElementById('root')
+);
 
 serviceWorker.unregister();
