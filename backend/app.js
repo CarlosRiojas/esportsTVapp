@@ -26,8 +26,6 @@ app.use(
     credentials: true,
     origin: [
       process.env.FRONTENDPOINT,
-      'http://localhost:3001',
-      'http://localhost:3000',
       '*'  ]
   })
 );
@@ -44,7 +42,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, 'public/build')));//le anadi "build"
+app.use(express.static(path.join(__dirname, 'public')));//le anadi "build"
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
