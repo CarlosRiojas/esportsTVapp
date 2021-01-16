@@ -14,6 +14,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+
+
 //external component
 
 
@@ -27,21 +29,21 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    margin: `${theme.spacing(30)}px auto`,
+    margin: `${theme.spacing(5)}px auto`,
     height:theme.spacing(50),
     width:theme.spacing(50),
     backgroundColor: '#2F3E46',
-     padding: theme.spacing(2)
+     padding: theme.spacing(1)
   },
   FormControl:{
   padding: theme.spacing(1),
 },
-'& > *': {
-      margin: theme.spacing(1),
-      width:60
-    },
   button:{
     padding: theme.spacing(6)
+  },
+  logo:{
+    width:theme.spacing(30),
+    height:theme.spacing(30)
   }
 }));
 
@@ -61,8 +63,10 @@ function Home() {
       backgroundImage: `url(${"../images/esportbackground.jpg"})`,
       backgroundSize: 'cover' ,
       backgroundRepeat: 'no-repeat'}}>
-      <NoSsr>
 
+            <img className={classes.logo} src="images/vantagelogo.png" />
+
+      <NoSsr>
             <Grid container
               direction= 'column'
               justify = 'center'
@@ -73,7 +77,7 @@ function Home() {
             <h1 style={{
               color:"white"
             }}>WELCOME !</h1>
-            <Grid container spacing={3}
+            <Grid container spacing={4}
             direction = 'column'>
               <Grid item xs={7}>
                 <FormControl variant="filled">
@@ -88,14 +92,14 @@ function Home() {
                   <FilledInput id="component-filled" value={password} onChange={handleChange}/>
                 </FormControl>
               </Grid>
-              <Grid container spacing={5}
+              <Grid container spacing={4}
                     direction= "row"
                                 >
                   <Grid item xs={4}>
                     <Button variant="contained">Sign in</Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button variant="contained">Sign up</Button>
+                    <Button variant="outlined">Sign up</Button>
                   </Grid>
 
               </Grid>
