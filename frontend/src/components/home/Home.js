@@ -1,12 +1,13 @@
 import React from 'react';
+//Material UI STYLES
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 //Material UI index
 import Button from '@material-ui/core/button'
 import TextField from '@material-ui/core/TextField';
-import NoSsr from '@material-ui/core/NoSsr';
-//Form imports
+import NoSsr from '@material-ui/core/NoSsr';// on demand rendering
+//Material UI Form imports
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -33,9 +34,15 @@ const useStyles = makeStyles((theme) => ({
      padding: theme.spacing(2)
   },
   FormControl:{
-  padding: theme.spacing(10)
+  padding: theme.spacing(1),
 },
-
+'& > *': {
+      margin: theme.spacing(1),
+      width:60
+    },
+  button:{
+    padding: theme.spacing(6)
+  }
 }));
 
 
@@ -60,6 +67,7 @@ function Home() {
               direction= 'column'
               justify = 'center'
               alignItems='center'
+
           >
             <Paper className={classes.paper}>
             <h1 style={{
@@ -67,25 +75,35 @@ function Home() {
             }}>WELCOME !</h1>
             <Grid container spacing={3}
             direction = 'column'>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <FormControl variant="filled">
                   <InputLabel htmlFor="component-filled">Email</InputLabel>
-                  <FilledInput id="component-filled" value={email} onChange={handleChange}   />
+                  <FilledInput id="component-filled" value={email} onChange={handleChange}/>
+
                 </FormControl>
               </Grid>
-              <Grid item xs={6}>
-              <FormControl variant="filled"
-                            padding-bottom="30px">
+              <Grid item xs={7}>
+                <FormControl variant="filled">
                   <InputLabel htmlFor="component-filled">Password</InputLabel>
                   <FilledInput id="component-filled" value={password} onChange={handleChange}/>
-              </FormControl>
+                </FormControl>
               </Grid>
+              <Grid container spacing={5}
+                    direction= "row"
+                                >
+                  <Grid item xs={4}>
+                    <Button variant="contained">Sign in</Button>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Button variant="contained">Sign up</Button>
+                  </Grid>
 
+              </Grid>
             </Grid>
            </Paper>
           </Grid>
-        </NoSsr>
-        </div>
+         </NoSsr>
+       </div>
 
   );
 }
