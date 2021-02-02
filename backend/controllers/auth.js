@@ -68,7 +68,7 @@ exports.logout =(req,res)=>{
 exports.profileView = async (req,res)=>{
   try{
     const id = req.session.passport.user
-    const user = await.User.findById(id)
+    const user = Await.User.findById(id)
     res.send('profile',user)
   }catch(e){
     console.error(e)
@@ -78,7 +78,7 @@ exports.profileView = async (req,res)=>{
 
 //EDIT PROFILE------------------------------
 
-export.editProfile= async(req,res)=> {
+exports.editProfile= async(req,res)=> {
   try {
     //traemos la info del form
     const {email,password,name} = req.body
@@ -87,7 +87,7 @@ export.editProfile= async(req,res)=> {
 
     //actualizamos el email
     if (email){
-      const user = await.User.findByIdAndUpdate(
+      const user = Await.User.findByIdAndUpdate(
         userId,
         {
           email,
@@ -117,7 +117,7 @@ export.editProfile= async(req,res)=> {
 if(password){
   const salt = bcrypt.genSaltSync(12)
   const hashPass = bcrypt.hashSync(password,salt)
-  const user = await.User.findByIdAndUpdate(
+  const user = Await.User.findByIdAndUpdate(
     userId,
     {
       password: hashPass,

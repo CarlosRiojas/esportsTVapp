@@ -1,39 +1,87 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import SearchHub from '../maindashboard/SearchHub';
+
+//side menu component import
+import SideMenu from '../maindashboard/SideMenu';
+
+//menu imports
+import {
+  AppBar,
+  Toolbar,
+  Container,
+  IconButton,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Hidden
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    color:'blue'
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(0),
   },
   title: {
     flexGrow: 1,
   },
+  logout: {
+    display: 'flex',
+    flex:1,
+    justifyContent: 'flex-end'
+  },
+  logo: {
+    display: 'flex',
+    flex:1,
+    justifyContent: 'flex-start',
+    maxWidth:'18%',
+    minWidth: '12%'
+  },
+  navDisplayFlex: {
+    display: `flex`,
+    justifyContent: `space-between`
+  },
+  linkText: {
+    textDecoration: `none`,
+    textTransform: `uppercase`,
+    color: `white`
+  }
 }));
 
-export default function MainDash() {
+//sideMenu navigation props
+const navLinks = [
+  { title: `about us`, path: `/about-us` },
+  { title: `product`, path: `/product` },
+  { title: `blog`, path: `/blog` },
+  { title: `contact`, path: `/contact` },
+  { title: `faq`, path: `/faq` }
+];
+
+const MainDash= ()=> {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{backgroundColor:'#354F52'}}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            <SideMenu navLinks={navLinks}/>
           </IconButton>
-          
-          <Button color="inherit">Log out</Button>
+            <img className={classes.logo} src="images/vantagelogo.png" />
+             <Button className={classes.logout} color="inherit">My profile</Button>
+             <Button className={classes.myProfile} color="inherit">Log out</Button>
         </Toolbar>
       </AppBar>
+     
+          <SearchHub />
+      
     </div>
   );
 }
+
+export default MainDash

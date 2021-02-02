@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     overflow: 'hidden',
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 1),
     height:900
   },
   paper: {
@@ -32,18 +32,29 @@ const useStyles = makeStyles((theme) => ({
     margin: `${theme.spacing(5)}px auto`,
     height:theme.spacing(50),
     width:theme.spacing(50),
-    backgroundColor: '#2F3E46',
-     padding: theme.spacing(1)
+    backgroundColor: '#52796F',
+     padding: theme.spacing(1),
+     borderRadius:'30px'
   },
-  FormControl:{
-  padding: theme.spacing(1),
-},
+  internalForm:{
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    
+  },
   button:{
-    padding: theme.spacing(6)
+    padding: theme.spacing(2),
+    display:'flex',
+    flexDirection: 'row',
+    justifyContent:'center'
+
   },
   logo:{
-    width:theme.spacing(30),
-    height:theme.spacing(30)
+    height:theme.spacing(10),
+    padding:theme.spacing(3)
+  },
+  signup:{
+    color:'white'
   }
 }));
 
@@ -62,14 +73,15 @@ function Home() {
     <div className={classes.root}  style={{
       backgroundImage: `url(${"../images/esportbackground.jpg"})`,
       backgroundSize: 'cover' ,
-      backgroundRepeat: 'no-repeat'}}>
+      backgroundRepeat: 'no-repeat',
+      backgroundOpacity:'30%'}}>
 
             <img className={classes.logo} src="images/vantagelogo.png" />
 
       <NoSsr>
             <Grid container
               direction= 'column'
-              justify = 'center'
+              justifyContent = 'center'
               alignItems='center'
 
           >
@@ -77,31 +89,28 @@ function Home() {
             <h1 style={{
               color:"white"
             }}>WELCOME !</h1>
-            <Grid container spacing={4}
+            <Grid className={classes.internalForm} container spacing={3}
             direction = 'column'>
-              <Grid item xs={7}>
+              <Grid item md={12}>
                 <FormControl variant="filled">
                   <InputLabel htmlFor="component-filled">Email</InputLabel>
-                  <FilledInput id="component-filled" value={email} onChange={handleChange}/>
+                  <FilledInput id="component-filled" style={{backgroundColor : "white"}}value={email} onChange={handleChange}/>
 
                 </FormControl>
               </Grid>
-              <Grid item xs={7}>
+              <Grid item md={12}>
                 <FormControl variant="filled">
                   <InputLabel htmlFor="component-filled">Password</InputLabel>
-                  <FilledInput id="component-filled" value={password} onChange={handleChange}/>
+                  <FilledInput id="component-filled" style={{backgroundColor: "white"}} value={password} onChange={handleChange}/>
                 </FormControl>
               </Grid>
-              <Grid container spacing={4}
-                    direction= "row"
-                                >
+              <Grid className={classes.button}>
                   <Grid item xs={4}>
                     <Button variant="contained">Sign in</Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button variant="outlined">Sign up</Button>
+                    <Button className={classes.signup}variant="outlined">Sign up</Button>
                   </Grid>
-
               </Grid>
             </Grid>
            </Paper>
