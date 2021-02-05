@@ -148,5 +148,5 @@ exports.deleteProfile = async (req,res) => {
 }
 
 exports.currentUser = (req,res) => {
-  res.jsaon(req.user || null)
+  res.json(req.user || null)
 }
