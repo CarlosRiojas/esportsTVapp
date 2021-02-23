@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import {useContextInfo} from '../../hooks/context'
 //Material UI STYLES
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -86,6 +88,7 @@ function Home() {
     const classes = useStyles()
     const [email, setEmail] = React.useState();
     const [password, setPassword] = React.useState();
+    const {user} = useContextInfo()
     //popover component hook
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
@@ -111,7 +114,11 @@ function Home() {
 
 
 
-  return (
+  return  user ? (
+    <>
+      <redirect to ="/maindash" />
+      </>
+  ) : ( 
     <div className={classes.root}  style={{
       backgroundImage: `url(${"../images/esportbackground.jpg"})`,
       backgroundSize: 'cover' ,

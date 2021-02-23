@@ -14,7 +14,7 @@ const authService = axios.create({ withCredentials: true, baseURL });
 
   export const loginFunc = (userInf) => authService.post('/login', userInf);
 
-  export const currentUserFunc = (userInf) => authService.get('/current-user')
+  export const currentUserFunc = () => authService.get('/current-user')
   
   export const logoutFunc = () => authService.get('/logout')
 

@@ -1,4 +1,4 @@
-import { React,useState, createContext, useContext, useEffect } from 'react';
+import React,{useState, createContext, useContext, useEffect } from 'react';
 
 import { currentUserFunc } from '../services/auth';
 
@@ -21,12 +21,12 @@ export const AppCtxProvider = (props)=>{
 
     },[userUpdate])
 
-    const login = (userInfo) => {
-        setUser(userInfo)
+    const login = (userInf) => {
+        setUser(userInf)
     }
 
-    const signup = (userInfo)=> {
-        setUser(userInfo)
+    const signup = (userInf)=> {
+        setUser(userInf)
     }
 
     const logout = () => {
