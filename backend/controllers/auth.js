@@ -5,148 +5,153 @@ passport = require('../config/passport')
 
 
 //SIGN UP CONTROL-------------------------------------------------------------------
-exports.signupProcessUser = async (req,res)=>{
+exports.signupProcessUser = async (req, res) => {
   try {
-    const{ email,password,name} = req.body
-    if(!email || !password){
-      return res.status(403).json({message: "Please provide an email and a password"})
+    const { email, password } = req.body
+    if (!email || !password) {
+      return res.status(403).json({ message: "Please provide an email and a password" })
       //validates data being written or not ^
     }
-    const user= await User.findOne({
+    const user = await User.findOne({
       email,
     })
-    if(user){
-      return res.status(401).json({message:'user already exists'})
+    if (user) {
+      return res.status(401).json({ message: 'user already exists' })
     }
-    const salt= bcrypt.genSaltSync(12)//HASHING PASSWORD LENGTH
-    const hashPass = bcrypt.hashSync(password,salt)
-    const newUser= await User.create({
+    const salt = bcrypt.genSaltSync(12)//HASHING PASSWORD LENGTH
+    const hashPass = bcrypt.hashSync(password, salt)
+    const newUser = await User.create({
       email,
-      password: hashPass,
-      name,
+      password: hashPass
+
     })
 
-    if(newUser) res.status(201).json(newUser)
+    if (newUser) res.status(201).json(newUser)
     //if the user is geniune,we're good to go
-  }catch(e) {
+  } catch (e) {
     console.log(e)
-    res.status(401).json({message: e})
-  }finally {
+    res.status(401).json({ message: e })
+  } finally {
     console.log('CONTROLLER signupProcessUser')
   }
 }
 
 //LOGIN CONTROL-------------------------------------------------------
-exports.loginProcess = async(req,res,next)=> {
-  passport.authenticate('local',(err, failure, failureDetails)=>{
-    if(err){
-      return res.status(500).json({message:err})
+exports.loginProcess = async (req, res, next) => {
+  passport.authenticate('local', (err, user, failureDetails) => {
+    if (err) {
+      return res.status(500).json({ message: err })
     }
-    if(!user){
-      return res.status(401).json({message: 'no user with that credentials'})
+    if (!user) {
+      return res.status(401).json({ message: 'no user with that credentials' })
     }
-    req.login(user, (err)=>{
-      if(err){
-        return res.status(500).json({message: err})
+    req.login(user, (err) => {
+      if (err) {
+        return res.status(500).json({ message: err })
       }
       user.password = null
       res.status(200).json(user)
     })
-  })(req,res,next)
+  })(req, res, next)
 }
 
-    //---logout---
-exports.logout =(req,res)=>{
+//---logout---
+exports.logout = (req, res) => {
   req.session.destroy()
   req.logout()
-  res.status(200).json({message: 'logged out'})
+  res.status(200).json({ message: 'logged out' })
 }
 
+
+exports.currentUser = (req, res) => {
+  // console.log('currentUser', req.user);
+  res.json(req.user || null);
+};
 
 //VIEW PROFILE-----------------------------
 
-exports.profileView = async (req,res)=>{
-  try{
+exports.profileView = async (req, res) => {
+  try {
     const id = req.session.passport.user
     const user = Await.User.findById(id)
-    res.send('profile',user)
-  }catch(e){
+    res.send('profile', user)
+  } catch (e) {
     console.error(e)
-    res.status(401).json({message:e})
+    res.status(401).json({ message: e })
   }
 }
 
 //EDIT PROFILE------------------------------
 
-exports.editProfile= async(req,res)=> {
+exports.editProfile = async (req, res) => {
   try {
     //traemos la info del form
-    const {email,password,name} = req.body
+    const { email, password, name } = req.body
     //obtenemos el USER ID
-    const userId =req.session.passport.user
+    const userId = req.session.passport.user
 
     //actualizamos el email
-    if (email){
+    if (email) {
       const user = Await.User.findByIdAndUpdate(
         userId,
         {
           email,
         },
         {
-          new:true
+          new: true
         }
       )
       res.status(202).json(user)
     }
 
     //Actualizamos el nombre
-    if(name){
+    if (name) {
       const user = await User.findByIdAndUpdate(
         userId,
         {
           name: name,
         },
         {
-          new:true,
+          new: true,
         }
       )
       res.status(202).json(user)
     }
 
-//Update PASSWORD
-if(password){
-  const salt = bcrypt.genSaltSync(12)
-  const hashPass = bcrypt.hashSync(password,salt)
-  const user = Await.User.findByIdAndUpdate(
-    userId,
-    {
-      password: hashPass,
-    },
-    {
-      new:true,
+    //Update PASSWORD
+    if (password) {
+      const salt = bcrypt.genSaltSync(12)
+      const hashPass = bcrypt.hashSync(password, salt)
+      const user = Await.User.findByIdAndUpdate(
+        userId,
+        {
+          password: hashPass,
+        },
+        {
+          new: true,
+        }
+      )
+      res.status(202).json(user)
     }
-  )
-  res.status(202).json(user)
-  }
-}catch (e){
-  console.log(e.message)
-  res.status(500).json({message: e.message})
-} finally {
-  console.log('CONTROLLER Route edit')
+  } catch (e) {
+    console.log(e.message)
+    res.status(500).json({ message: e.message })
+  } finally {
+    console.log('CONTROLLER Route edit')
   }
 }
 
 //DELETE profile
 
-exports.deleteProfile = async (req,res) => {
+exports.deleteProfile = async (req, res) => {
   const userId = req.session.passport.user
   const user = await User.findById(userId)
   let userDeleted = await User.deleteOne({
-    _id:userId,
+    _id: userId,
   })
-  res.status(200).json({message:'Profile deleted'})
+  res.status(200).json({ message: 'Profile deleted' })
 }
 
-exports.currentUser = (req,res) => {
+exports.currentUser = (req, res) => {
   res.json(req.user || null)
 }

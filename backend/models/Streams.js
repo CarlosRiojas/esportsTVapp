@@ -1,12 +1,12 @@
-const {Schema,model} = require("mongoose")
+const { Schema, model } = require("mongoose")
 
 const streamSchema = new Schema({
-  title:String,
-  link:String
+  title: String,
+  link: String
 },
   {
-  timestamps:true
+    timestamps: true
   }
-})
+)
 
-module.exports = model("Streams",streamSchema)
+module.exports = model("Streams", streamSchema)

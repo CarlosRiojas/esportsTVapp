@@ -17,11 +17,14 @@ const {
 
 router.post('/signup', signupProcessUser);
 
-router.post('/login',loginProcess );
+router.post('/login', loginProcess);
 
 router.get('/logout', logout);
 
-router.put('/EditProfile',editProfile );
+router.get('/current-user', currentUser)
+
+router.put('/EditProfile', editProfile);
+
 
 function isAuth(req, res, next) {
   req.isAuthenticated() ? next() : res.status(401).json({ msg: 'Log in first' });
