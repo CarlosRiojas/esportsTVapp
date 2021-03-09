@@ -11,6 +11,7 @@ const session = require('express-session');
 const passport = require('./config/passport');
 
 
+
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((x) => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
@@ -21,14 +22,16 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 const app = express();
 
+
 app.use(
   cors({
     credentials: true,
     origin: [
       process.env.FRONTENDPOINT,
-      '*'  ]
+      '*']
   })
 );
+
 
 app.use(
   session({
@@ -48,10 +51,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(logger('dev'));
 
-const index = require('./routes/index');
-const auth = require('./routes/auth');
-app.use('/', index);
-app.use('/', auth);
+// const index = require('./routes/index');
+const userRoute = require('./routes/auth');
+// app.use('/', index);
+app.use('/', userRoute);
 
 // Uncomment this line for production
 app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));

@@ -7,7 +7,7 @@ passport = require('../config/passport')
 //SIGN UP CONTROL-------------------------------------------------------------------
 exports.signupProcessUser = async (req, res) => {
   try {
-    const { email, password } = req.body
+    const { email, password, name } = req.body
     if (!email || !password) {
       return res.status(403).json({ message: "Please provide an email and a password" })
       //validates data being written or not ^
@@ -22,7 +22,8 @@ exports.signupProcessUser = async (req, res) => {
     const hashPass = bcrypt.hashSync(password, salt)
     const newUser = await User.create({
       email,
-      password: hashPass
+      password: hashPass,
+      name,
 
     })
 

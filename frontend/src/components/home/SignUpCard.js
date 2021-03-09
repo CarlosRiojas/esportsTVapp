@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 const SignUpCard = ({ history }) => {
-  const { register, handleSubmit, control } = useForm()
-  const { signup } = useContextInfo();
+  const { register, control } = useForm()
+  const { signup, login } = useContextInfo();
   const classes = useStyles()
   // const [email, setEmail] = React.useState();
   // const [password, setPassword] = React.useState();
@@ -61,7 +61,7 @@ const SignUpCard = ({ history }) => {
 
   console.log(signupFunc())
 
-  async function dataForm(userInput) {
+  async function handleSubmit(userInput) {
 
     try {
 
@@ -102,7 +102,7 @@ const SignUpCard = ({ history }) => {
       <Grid container spacing={5}
         direction='column'>
 
-        <form className={classes.formCont} onSubmit={handleSubmit(dataForm)}>
+        <form className={classes.formCont} onSubmit={handleSubmit}>
           <TextField
             className={classes.signup}
             variant='outlined'

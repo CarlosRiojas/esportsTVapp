@@ -8,12 +8,13 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 //Material UI index
-import Button from '@material-ui/core/button'
 import TextField from '@material-ui/core/TextField';
 import NoSsr from '@material-ui/core/NoSsr';// on demand rendering
 //Material UI Form imports
+import Button from '@material-ui/core/Button'
 import Popover from '@material-ui/core/Popover';
 import SignUpCard from './SignUpCard'
+import { FormControl } from '@material-ui/core';
 //external component
 
 
@@ -87,10 +88,8 @@ function Home({ history }) {
   const { register, handleSubmit, control } = useForm()
   const { login } = useContextInfo();
   const classes = useStyles()
-  // const [email, setEmail] = React.useState();
-  // const [password, setPassword] = React.useState();
   const { user } = useContextInfo()
-  //popover component hook
+  //popover component hook state change
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [error, setError] = useState(null)
 
@@ -99,7 +98,7 @@ function Home({ history }) {
     setAnchorEl(null);
   };
 
-  async function dataForm(userInput) {
+  async function data(userInput) {
     try {
       console.log(userInput)
       const { data } = await loginFunc(userInput)
@@ -114,7 +113,7 @@ function Home({ history }) {
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget)
   }
-
+  console.log(data())
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -125,7 +124,6 @@ function Home({ history }) {
   // const handlePasswordChange = (event) => {
   //   setPassword(event.target.value);
   // }
-
 
 
 
@@ -150,10 +148,10 @@ function Home({ history }) {
             <h1 style={{
               color: "white"
             }}>WELCOME !</h1>
-            <Grid className={classes.internalForm} container spacing={3}
+            <Grid className={classes.formCont} container spacing={3}
               direction='column'>
               <Grid item md={12}>
-                <form className={classes.formCont}>
+                <form onSubmit={handleSubmit(data => console.log(data))}>
                   <TextField
                     className={classes.signup}
                     variant='outlined'
@@ -184,7 +182,7 @@ function Home({ history }) {
 
                   <Grid className={classes.button}>
                     <Grid item xs={4}>
-                      <Button variant="contained">Sign in</Button>
+                      <Button type='submit' variant="contained">Sign in</Button>
                     </Grid>
                     <Grid item xs={4}>
                       <Button className={classes.signup} variant="outlined" onClick={handleClick}>
